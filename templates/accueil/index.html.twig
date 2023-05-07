@@ -97,6 +97,7 @@ function afficher()
 function afficheHTML(filtre,results)
 {
     //array results
+    let n = 1; 
     switch (filtre) 
     {
         case 'planets':
@@ -104,8 +105,7 @@ function afficheHTML(filtre,results)
                     +'<th>#</th><th>Nom</th><th>Diamètre</th><th>Climat</th>'
                     +'<th>Gravité</th><th>Population</th><th>Détails</th>'
                     +'</tr></thead><tbody>');   
-            console.log(results[0].name);
-            let n = 1;  
+            //console.log(results[0].name);
             for(var i = 0 ; i<10 ; i++)
             {
                 n = i+1;
@@ -118,18 +118,101 @@ function afficheHTML(filtre,results)
                 '</td></tr>');
             
             }
-            $('#taleaures').append('</tbody>');
             break;
-        case 'banane':
-            console.log('Le fruit est une banane');
+        case 'starships':
+            $('#taleaures').html('<thead class="table-light"><tr>'
+                    +'<th>#</th><th>Nom</th><th>Modèle</th><th>Fabriquant</th>'
+                    +'<th>Longueur</th><th>Equipage</th><th>Détails</th>'
+                    +'</tr></thead><tbody>');   
+            for(var i = 0 ; i<10 ; i++)
+            {
+                n = i+1;
+                $('#taleaures').append('<tr><td>'+n+'</td>'
+                +'<td>'+results[i].name+'</td>'+'<td>'+results[i].model+'</td><td>'+results[i].manufacturer+'</td>'
+                +'<td>'+results[i].length+'</td>'
+                +'<td>'+results[i].crew+'</td>'
+                +'<td>'+
+                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                '</td></tr>');
+            
+            }
             break;
-        case 'orange':
-            console.log('Le fruit est une orange');
+        case 'vehicles':
+            $('#taleaures').html('<thead class="table-light"><tr>'
+                    +'<th>#</th><th>Nom</th><th>Modèle</th><th>Fabriquant</th>'
+                    +'<th>Longueur</th><th>Equipage</th><th>Détails</th>'
+                    +'</tr></thead><tbody>');   
+            for(var i = 0 ; i<10 ; i++)
+            {
+                n = i+1;
+                $('#taleaures').append('<tr><td>'+n+'</td>'
+                +'<td>'+results[i].name+'</td>'+'<td>'+results[i].model+'</td><td>'+results[i].manufacturer+'</td>'
+                +'<td>'+results[i].length+'</td>'
+                +'<td>'+results[i].crew+'</td>'
+                +'<td>'+
+                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                '</td></tr>');
+            
+            }
+            break;
+        case 'people':
+            $('#taleaures').html('<thead class="table-light"><tr>'
+                    +'<th>#</th><th>Nom</th><th>Longueur</th><th>Poids</th>'
+                    +'<th>Couleur de cheveux</th><th>Couleur de peau</th><th>Genre</th><th>Détails</th>'
+                    +'</tr></thead><tbody>');   
+            for(var i = 0 ; i<10 ; i++)
+            {
+                n = i+1;
+                $('#taleaures').append('<tr><td>'+n+'</td>'
+                +'<td>'+results[i].name+'</td>'+'<td>'+results[i].height+'</td><td>'+results[i].mass+'</td>'
+                +'<td>'+results[i].hair_color+'</td>'+'<td>'+results[i].skin_color+'</td>'
+                +'<td>'+results[i].gender+'</td>'
+                +'<td>'+
+                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                '</td></tr>');
+            
+            }
+            break;
+        case 'films':
+            $('#taleaures').html('<thead class="table-light"><tr>'
+                    +'<th>#</th><th>Titre</th><th>Episode</th><th>Situation initiale</th>'
+                    +'<th>Directeur</th><th>Producteur</th><th>Date de sortie</th><th>Détails</th>'
+                    +'</tr></thead><tbody>');   
+            for(var i = 0 ; i<10 ; i++)
+            {
+                n = i+1;
+                $('#taleaures').append('<tr><td>'+n+'</td>'
+                +'<td>'+results[i].title+'</td>'+'<td>'+results[i].episode_id+'</td><td>'+results[i].opening_crawl+'</td>'
+                +'<td>'+results[i].director+'</td>'+'<td>'+results[i].producer+'</td>'+'<td>'+results[i].release_date+'</td>'
+                +'<td>'+
+                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                '</td></tr>');
+            
+            }
+            break;
+        case 'species':
+            $('#taleaures').html('<thead class="table-light"><tr>'
+                    +'<th>#</th><th>Nom</th><th>Classification</th><th>Designation</th>'
+                    +'<th>Hauteur moyenne</th><th>language</th><th>Détails</th>'
+                    +'</tr></thead><tbody>');   
+            for(var i = 0 ; i<10 ; i++)
+            {
+                n = i+1;
+                $('#taleaures').append('<tr><td>'+n+'</td>'
+                +'<td>'+results[i].name+'</td>'+'<td>'+results[i].classification+'</td><td>'+
+                results[i].classification+'</td>'
+                +'<td>'+results[i].average_height+'</td>'+'<td>'+results[i].language+'</td>'
+                +'<td>'+
+                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                '</td></tr>');
+            
+            }
             break;
         default:
-            console.log('Le fruit est inconnu');
+            console.log('Le filtre est inconnu');
             break;
     }
+    $('#taleaures').append('</tbody>');
 }//fin afficheHTML
 </script>
 {% endblock %}
