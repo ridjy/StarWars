@@ -38,11 +38,13 @@ class AccueilController extends AbstractController
         if ($request->isXmlHttpRequest()) 
         {
             $filtre = $request->request->get('filtre');
+            $page = $request->request->get('pagination') ?? 0;
+            $endpoint = ($page!=0) ? $filtre.'/?page='.$page : $filtre;
             //ne pas verifier le certificat pour des tests en local
             $client = new Client([
                 'verify' => false,
                 'base_uri' => self::API_URI ] );
-            $response = $client->request('GET', $filtre);
+            $response = $client->request('GET', $endpoint);
             $body = $response->getBody()->getContents();
             return new JsonResponse(json_decode($body));
         } else {

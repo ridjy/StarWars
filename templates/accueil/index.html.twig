@@ -27,7 +27,7 @@
 
         <div class="row">
             <!--div tableau-->
-            <span><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour afficher les données</span>
+            <span id="spanall"><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour afficher les données</span>
             <div class="col" id="tab" style="display:none;">
                 <table class="table table-bordered border-primary" id="taleaures">
                     
@@ -80,7 +80,17 @@ function afficher()
                 console.log(response.next);
                 console.log(response.previous);*/
                 if (response.previous === null) { $('#prec').hide(); }
+                else {
+                    //valeur prochaine page
+                    var page = response.previous.charAt(response.previous.length - 1); 
+                    $('#suiv').attr('onclick', 'precedent('+page+')');
+                }
                 if (response.next === null) { $('#suiv').hide(); }
+                else {
+                    //valeur prochaine page
+                    var page = response.next.charAt(response.next.length - 1); 
+                    $('#suiv').attr('onclick', 'suivant('+page+')');
+                }
                 afficheHTML(filtre,response.results);
                 //$('#results').html(response);
             },
@@ -214,5 +224,90 @@ function afficheHTML(filtre,results)
     }
     $('#taleaures').append('</tbody>');
 }//fin afficheHTML
+
+function suivant(p)
+{
+    $('#tab').hide()
+    $('#loadingDiv').show();
+    var filtre = '{{filtre}}' ; 
+    $.ajax({
+        url: "{{ path('app_afficher') }}",
+        type: 'POST',
+        data: { filtre: filtre, pagination : p },
+        success: function(response) {
+            // Masquer le div d'attente
+            $('#loadingDiv').hide();
+            $('#tab').show();
+            // Afficher les résultats
+            $('#afficheres').html('Affichage de 10 sur '+response.count+' résultat(s)');
+            /*console.log(response.count);
+            console.log(response.next);
+            console.log(response.previous);*/
+            if (response.previous === null) { $('#prec').hide(); }
+            else {
+                //valeur prochaine page
+                var page = response.previous.charAt(response.previous.length - 1); 
+                $('#prec').attr('onclick', 'precedent('+page+')');
+            }
+            if (response.next === null) { $('#suiv').hide(); }
+            else {
+                //valeur prochaine page
+                var page = response.next.charAt(response.next.length - 1); 
+                $('#suiv').attr('onclick', 'suivant('+page+')');
+            }
+            afficheHTML(filtre,response.results);
+            //$('#results').html(response);
+        },
+        error: function() {
+        // En cas d'erreur, masquer le div d'attente et afficher un message d'erreur
+            $('#loadingDiv').hide();
+            $('#tab').show();
+            $('#tab').html('Une erreur s\'est produite.');
+        }
+    });
+}//fin suivant
+
+function precedent(p)
+{
+    $('#tab').hide()
+    $('#loadingDiv').show();
+    var filtre = '{{filtre}}' ; 
+    $.ajax({
+        url: "{{ path('app_afficher') }}",
+        type: 'POST',
+        data: { filtre: filtre, pagination : p },
+        success: function(response) {
+            // Masquer le div d'attente
+            $('#loadingDiv').hide();
+            $('#tab').show();
+            // Afficher les résultats
+            $('#afficheres').html('Affichage de 10 sur '+response.count+' résultat(s)');
+            /*console.log(response.count);
+            console.log(response.next);
+            console.log(response.previous);*/
+            if (response.previous === null) { $('#prec').hide(); }
+            else {
+                //valeur prochaine page
+                var page = response.previous.charAt(response.previous.length - 1); 
+                $('#prec').attr('onclick', 'precedent('+page+')');
+            }
+            if (response.next === null) { $('#suiv').hide(); }
+            else {
+                //valeur prochaine page
+                var page = response.next.charAt(response.next.length - 1); 
+                $('#suiv').attr('onclick', 'suivant('+page+')');
+            }
+            afficheHTML(filtre,response.results);
+            //$('#results').html(response);
+        },
+        error: function() {
+        // En cas d'erreur, masquer le div d'attente et afficher un message d'erreur
+            $('#loadingDiv').hide();
+            $('#tab').show();
+            $('#tab').html('Une erreur s\'est produite.');
+        }
+    });
+}//fin suivant
+
 </script>
 {% endblock %}
