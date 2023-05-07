@@ -3,8 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>Star Wars | {% block title %} Alliance Rebelle{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             <!-- Google Fonts -->
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -20,6 +18,10 @@
     </head>
     <body>
         <main id="main">
+            <!-- ======= Mobile nav toggle button ======= -->
+            <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+            {% include 'header.html.twig' %}
+
             {% block body %}{% endblock %}
         </main><!-- End #main -->
 
