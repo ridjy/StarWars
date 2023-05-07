@@ -87,6 +87,9 @@ class AccueilController extends AbstractController
             {
                 $a_retour = $this->getNameUri($value);
                 $html .= '<span><b>'.$key.'</b> : '.$a_retour['valeur'].'</span><br/>';
+            } else if ($key=='created' || $key=='edited')
+            {
+                $html .= '<span><b>'.$key.'</b> : '.\DateTime::createFromFormat("Y-m-d\TH:i:s.u\Z", $value)->format("Y-m-d H:i:s").'</span><br/>';
             }
             else {
                 if ($key!='url')
