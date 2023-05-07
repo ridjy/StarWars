@@ -2,18 +2,51 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Star Wars | {% block title %} Alliance Rebelle{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <!-- Google Fonts -->
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+            <!-- Vendor CSS Files -->
+            <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+            <link href="{{asset('css/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+
+            <!-- Template Main CSS File -->
+            <link href="{{asset('css/style.css')}}" rel="stylesheet">
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <main id="main">
+            {% block body %}{% endblock %}
+        </main><!-- End #main -->
+
+        <!-- ======= Footer ======= -->
+        <footer id="footer">
+            <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Star Wars</span></strong>
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+            </div>
+        </footer><!-- End  Footer -->
+
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        
+        {% block javascripts %}
+            <!-- Vendor JS Files -->
+            <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+
+            <!-- Template Main JS File -->
+            <script src="{{asset('js/main.js')}}"></script>
+    
+        {% endblock %} 
     </body>
 </html>
