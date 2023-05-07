@@ -11,8 +11,9 @@ class AccueilController extends AbstractController
     #[Route('/', name: 'app_accueil')]
     public function index(): Response
     {
+        $filtre = 'Planètes';
         return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
+            'filtre' => $filtre,
         ]);
     }
 }
