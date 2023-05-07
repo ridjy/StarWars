@@ -70,19 +70,53 @@ class AccueilController extends AbstractController
         $body = $response->getBody()->getContents();
         //création du détail
         $aJSON = json_decode($body,true);//array
-        $html = '<p>';
+        $html = '<p><span><b># : </b>'.substr($aJSON['url'], -2, 1).'</span><br/>';
+        $htmlist = '<p>';
         foreach ($aJSON as $key => $value)
         {
-            if(is_array($value)){
-
-            } else {
-                $html .= '<span><b>'.$key.'</b> : '.$value.'</span><br/>';
+            if(is_array($value))
+            {
+                $htmlist .= '<b>'.$key.'</b><ul>';
+                foreach ($value as $uripoint)
+                {
+                    $a_retour = $this->getNameUri($uripoint);
+                    $htmlist .= '<li><b>'.$a_retour['cle'].'</b> : '.$a_retour['valeur'].'</li>';
+                }
+                $htmlist .= '</ul>';
+            } else if(str_contains($value, 'https://swapi.dev/api/')) 
+            {
+                $a_retour = $this->getNameUri($value);
+                $html .= '<span><b>'.$key.'</b> : '.$a_retour['valeur'].'</span><br/>';
+            }
+            else {
+                if ($key!='url')
+                    $html .= '<span><b>'.$key.'</b> : '.$value.'</span><br/>';
             }
         }//end foreach
-        $html .= '</p>';
+        $html .= '</p>';$htmlist .= '</p>';
         return $this->render('accueil/details.html.twig', [
             'data' => $html,
+            'list' => $htmlist,
             'filtre' => $filtre
         ]);
     }//end function affichertout
+
+    private function getNameUri($uripoint) : array
+    {
+        $endpoint = str_replace('https://swapi.dev/api/','',$uripoint);
+        //ne pas verifier le certificat pour des tests en local
+        $client = new Client([
+            'verify' => false,
+            'base_uri' => self::API_URI ] );
+        $response = $client->request('GET', $endpoint);
+        $body = $response->getBody()->getContents();
+        //création du détail
+        $aJSON = json_decode($body,true);//array
+        foreach ($aJSON as $key => $value)
+        {
+            $a_res['cle'] = $key;
+            $a_res['valeur'] = $value;
+            return $a_res;//on arrête la boucle
+        }    
+    }//end getnameuri
 }
