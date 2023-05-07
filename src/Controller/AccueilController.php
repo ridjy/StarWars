@@ -33,7 +33,7 @@ class AccueilController extends AbstractController
     }
 
     #[Route('/afficher', name: 'app_afficher')]
-    public function afficherTout(Request $request): Response
+    public function afficherTout(Request $request): JsonResponse
     {
         if ($request->isXmlHttpRequest()) 
         {
@@ -55,5 +55,34 @@ class AccueilController extends AbstractController
             
             return new JsonResponse($data);
         }
+    }//end function affichertout
+
+    #[Route('/details', name: 'app_details')]
+    public function afficherDetail(Request $request): Response
+    {
+        $endpoint = $request->query->get('endurl');
+        $filtre = $request->query->get('parametre') ?? 'planets';
+        //ne pas verifier le certificat pour des tests en local
+        $client = new Client([
+            'verify' => false,
+            'base_uri' => self::API_URI ] );
+        $response = $client->request('GET', $endpoint);
+        $body = $response->getBody()->getContents();
+        //création du détail
+        $aJSON = json_decode($body,true);//array
+        $html = '<p>';
+        foreach ($aJSON as $key => $value)
+        {
+            if(is_array($value)){
+
+            } else {
+                $html .= '<span><b>'.$key.'</b> : '.$value.'</span><br/>';
+            }
+        }//end foreach
+        $html .= '</p>';
+        return $this->render('accueil/details.html.twig', [
+            'data' => $html,
+            'filtre' => $filtre
+        ]);
     }//end function affichertout
 }

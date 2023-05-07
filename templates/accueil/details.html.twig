@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la donnée{% endblock %}
+
+{% block body %}
+<!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <button type="button" class="btn btn-danger">Retour</button>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <h2>Page de détail</h2>
+        </div>
+
+        <div class="row justify-content">
+            <div class="col-lg-6">
+                {{ data|raw }}
+            </div>
+            <div class="col-lg-6">
+                {{ data|raw }}
+            </div>
+        </div>
+
+      </div>
+    </section>
+{% endblock %}

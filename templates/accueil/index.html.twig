@@ -27,7 +27,7 @@
 
         <div class="row">
             <!--div tableau-->
-            <span id="spanall"><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour afficher les données</span>
+            <span id="spanall"><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour initialiser l'affichage des données</span>
             <div class="col" id="tab" style="display:none;">
                 <table class="table table-bordered border-primary" id="taleaures">
                     
@@ -112,6 +112,8 @@ function afficheHTML(filtre,results,p)
     //array results
     console.log(p);
     let n = 10*(p-1);
+    let endpoint = '';
+    let url = '';
     switch (filtre) 
     {
         case 'planets':
@@ -119,18 +121,20 @@ function afficheHTML(filtre,results,p)
                     +'<th>#</th><th>Nom</th><th>Diamètre</th><th>Climat</th>'
                     +'<th>Gravité</th><th>Population</th><th>Détails</th>'
                     +'</tr></thead><tbody>');   
-            //console.log(results[0].name);
+            
             for(var i = 0 ; i<10 ; i++)
             {
                 n++;
+                endpoint = results[i].url.replace('https://swapi.dev/api/','');
+                url = '{{ path("app_details", {"endurl": "endpoint" , "parametre" : "filtre"}) }}'; 
+                url = url.replace("endpoint", endpoint);url = url.replace("filtre", filtre);
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].diameter+'</td><td>'+results[i].climate+'</td>'
                 +'<td>'+results[i].gravity+'</td>'
                 +'<td>'+results[i].population+'</td>'
-                +'<td>'+
-                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                +'<td style="text-align:center;">'+
+                    '<a href="'+url+'"><i class="bi bi-info-circle"></i></a>'+
                 '</td></tr>');
-            
             }
             break;
         case 'starships':
@@ -141,12 +145,15 @@ function afficheHTML(filtre,results,p)
             for(var i = 0 ; i<10 ; i++)
             {
                 n++;
+                endpoint = results[i].url.replace('https://swapi.dev/api/','');
+                url = '{{ path("app_details", {"endurl": "endpoint" , "parametre" : "filtre"}) }}'; 
+                url = url.replace("endpoint", endpoint);url = url.replace("filtre", filtre);
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].model+'</td><td>'+results[i].manufacturer+'</td>'
                 +'<td>'+results[i].length+'</td>'
                 +'<td>'+results[i].crew+'</td>'
-                +'<td>'+
-                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                +'<td style="text-align:center;">'+
+                    '<a href="'+url+'"><i class="bi bi-info-circle"></i></a>'+
                 '</td></tr>');
             
             }
@@ -159,12 +166,15 @@ function afficheHTML(filtre,results,p)
             for(var i = 0 ; i<10 ; i++)
             {
                 n++;
+                endpoint = results[i].url.replace('https://swapi.dev/api/','');
+                url = '{{ path("app_details", {"endurl": "endpoint" , "parametre" : "filtre"}) }}'; 
+                url = url.replace("endpoint", endpoint);url = url.replace("filtre", filtre);
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].model+'</td><td>'+results[i].manufacturer+'</td>'
                 +'<td>'+results[i].length+'</td>'
                 +'<td>'+results[i].crew+'</td>'
-                +'<td>'+
-                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                +'<td style="text-align:center;">'+
+                    '<a href="'+url+'"><i class="bi bi-info-circle"></i></a>'+
                 '</td></tr>');
             
             }
@@ -177,12 +187,15 @@ function afficheHTML(filtre,results,p)
             for(var i = 0 ; i<10 ; i++)
             {
                 n++;
+                endpoint = results[i].url.replace('https://swapi.dev/api/','');
+                url = '{{ path("app_details", {"endurl": "endpoint" , "parametre" : "filtre"}) }}'; 
+                url = url.replace("endpoint", endpoint);url = url.replace("filtre", filtre);
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].height+'</td><td>'+results[i].mass+'</td>'
                 +'<td>'+results[i].hair_color+'</td>'+'<td>'+results[i].skin_color+'</td>'
                 +'<td>'+results[i].gender+'</td>'
-                +'<td>'+
-                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                +'<td style="text-align:center;">'+
+                    '<a href="'+url+'"><i class="bi bi-info-circle"></i></a>'+
                 '</td></tr>');
             
             }
@@ -195,11 +208,14 @@ function afficheHTML(filtre,results,p)
             for(var i = 0 ; i<10 ; i++)
             {
                 n++;
+                endpoint = results[i].url.replace('https://swapi.dev/api/','');
+                url = '{{ path("app_details", {"endurl": "endpoint" , "parametre" : "filtre"}) }}'; 
+                url = url.replace("endpoint", endpoint);url = url.replace("filtre", filtre);
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].title+'</td>'+'<td>'+results[i].episode_id+'</td><td>'+results[i].opening_crawl+'</td>'
                 +'<td>'+results[i].director+'</td>'+'<td>'+results[i].producer+'</td>'+'<td>'+results[i].release_date+'</td>'
-                +'<td>'+
-                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                +'<td style="text-align:center;">'+
+                    '<a href="'+url+'"><i class="bi bi-info-circle"></i></a>'+
                 '</td></tr>');
             
             }
@@ -212,12 +228,15 @@ function afficheHTML(filtre,results,p)
             for(var i = 0 ; i<10 ; i++)
             {
                 n++;
+                endpoint = results[i].url.replace('https://swapi.dev/api/','');
+                url = '{{ path("app_details", {"endurl": "endpoint" , "parametre" : "filtre"}) }}'; 
+                url = url.replace("endpoint", endpoint);url = url.replace("filtre", filtre);
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].classification+'</td><td>'+
                 results[i].classification+'</td>'
                 +'<td>'+results[i].average_height+'</td>'+'<td>'+results[i].language+'</td>'
-                +'<td>'+
-                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                +'<td style="text-align:center;">'+
+                    '<a href="'+url+'"><i class="bi bi-info-circle"></i></a>'+
                 '</td></tr>');
             
             }
