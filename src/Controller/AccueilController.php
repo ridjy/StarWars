@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 class AccueilController extends AbstractController
 {
     private const API_URI = 'swapi.dev/api/';
+    //private $client;
 
     #[Route('/', name: 'app_accueil')]
     public function index(): Response
@@ -29,10 +30,13 @@ class AccueilController extends AbstractController
         if ($request->isXmlHttpRequest()) 
         {
             $filtre = $request->request->get('filtre');
-            $client = new Client(['base_uri' => self::API_URI]);
+            //ne pas verifier le certificat pour des tests en local
+            $client = new Client([
+                'verify' => false,
+                'base_uri' => self::API_URI ] );
             $response = $client->request('GET', $filtre);
-            $body = $response->getBody();
-            dd($body);
+            $body = $response->getBody()->getContents();
+            return new JsonResponse(json_decode($body));
         } else {
             $data = [
                 'message' => 'Veuiller passer via les routes de l`\interface',

@@ -26,38 +26,21 @@
         </div>
 
         <div class="row">
-            <div class="col" style="display:none;">
-                <p>Affichage de n résultat(s)</p>
-                <table class="table">
-                <thead>
-                    <tr>
-                    <th>Colonne 1</th>
-                    <th>Colonne 2</th>
-                    <th>Colonne 3</th>
-                    <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>Ligne 1 - Colonne 1</td>
-                    <td>Ligne 1 - Colonne 2</td>
-                    <td>Ligne 1 - Colonne 3</td>
-                    <td>
-                        <a href="#"><i class="bi bi-info-circle"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>Ligne 2 - Colonne 1</td>
-                    <td>Ligne 2 - Colonne 2</td>
-                    <td>Ligne 2 - Colonne 3</td>
-                    <td>
-                        <a href="#"><i class="bi bi-info-circle"></i></a>
-                    </td>
-                    </tr>
-                    <!-- Ajoutez d'autres lignes fictives ici -->
-                </tbody>
+            <!--div tableau-->
+            <span><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour afficher les données</span>
+            <div class="col" id="tab" style="display:none;">
+                <table class="table table-bordered border-primary" id="taleaures">
+                    
                 </table>
+                <p id="afficheres"></p>
+                <div class="row" id="suivantprecedent">
+                    <div class="col">
+                        <button class="btn btn-light" id="prec">Précédent</button>
+                        <button class="btn btn-light" id="suiv">Suivant</button>
+                    </div>
+                </div>
             </div>
+            <!--div chargement-->
             <div class="col" id="loadingDiv" style="display:none;">
                 <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
                 <div class="spinner-border" role="status">
@@ -77,25 +60,76 @@
 <script>
 function afficher()
 {
-    $('#loadingDiv').show();
-    var filtre = '{{filtre}}' ; 
-    $.ajax({
-        url: "{{ path('app_afficher') }}",
-        type: 'POST',
-        data: { filtre: filtre },
-        success: function(response) {
-            // Masquer le div d'attente
-            $('#loadingDiv').hide();
-        
-        // Afficher les résultats
-        $('#results').html(response);
-        },
-        error: function() {
-        // En cas d'erreur, masquer le div d'attente et afficher un message d'erreur
-        $('#loadingDiv').hide();
-        $('#results').html('Une erreur s\'est produite.');
-        }
-    });
+    if ($('#tab').is(':visible')) 
+    {
+        console.log('resultat déjà affiché');
+    } else {
+        $('#loadingDiv').show();
+        var filtre = '{{filtre}}' ; 
+        $.ajax({
+            url: "{{ path('app_afficher') }}",
+            type: 'POST',
+            data: { filtre: filtre },
+            success: function(response) {
+                // Masquer le div d'attente
+                $('#loadingDiv').hide();
+                $('#tab').show();
+                // Afficher les résultats
+                $('#afficheres').html('Affichage de 10 sur '+response.count+' résultat(s)');
+                /*console.log(response.count);
+                console.log(response.next);
+                console.log(response.previous);*/
+                if (response.previous === null) { $('#prec').hide(); }
+                if (response.next === null) { $('#suiv').hide(); }
+                afficheHTML(filtre,response.results);
+                //$('#results').html(response);
+            },
+            error: function() {
+            // En cas d'erreur, masquer le div d'attente et afficher un message d'erreur
+                $('#loadingDiv').hide();
+                $('#tab').show();
+                $('#tab').html('Une erreur s\'est produite.');
+            }
+        });
+    }
 }//fin afficher
+
+function afficheHTML(filtre,results)
+{
+    //array results
+    switch (filtre) 
+    {
+        case 'planets':
+            $('#taleaures').html('<thead class="table-light"><tr>'
+                    +'<th>#</th><th>Nom</th><th>Diamètre</th><th>Climat</th>'
+                    +'<th>Gravité</th><th>Population</th><th>Détails</th>'
+                    +'</tr></thead><tbody>');   
+            console.log(results[0].name);
+            let n = 1;  
+            for(var i = 0 ; i<10 ; i++)
+            {
+                n = i+1;
+                $('#taleaures').append('<tr><td>'+n+'</td>'
+                +'<td>'+results[i].name+'</td>'+'<td>'+results[i].diameter+'</td><td>'+results[i].climate+'</td>'
+                +'<td>'+results[i].gravity+'</td>'
+                +'<td>'+results[i].population+'</td>'
+                +'<td>'+
+                    '<a href="results[i].url"><i class="bi bi-info-circle"></i></a>'+
+                '</td></tr>');
+            
+            }
+            $('#taleaures').append('</tbody>');
+            break;
+        case 'banane':
+            console.log('Le fruit est une banane');
+            break;
+        case 'orange':
+            console.log('Le fruit est une orange');
+            break;
+        default:
+            console.log('Le fruit est inconnu');
+            break;
+    }
+}//fin afficheHTML
 </script>
 {% endblock %}
