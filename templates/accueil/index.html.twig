@@ -65,7 +65,8 @@ function afficher()
         console.log('resultat déjà affiché');
     } else {
         $('#loadingDiv').show();
-        var filtre = '{{filtre}}' ; 
+        var filtre = '{{filtre}}' ;
+        var p = 1; 
         $.ajax({
             url: "{{ path('app_afficher') }}",
             type: 'POST',
@@ -82,16 +83,18 @@ function afficher()
                 if (response.previous === null) { $('#prec').hide(); }
                 else {
                     //valeur prochaine page
-                    var page = response.previous.charAt(response.previous.length - 1); 
-                    $('#suiv').attr('onclick', 'precedent('+page+')');
+                    $('#prec').show();
+                    page = response.previous.charAt(response.previous.length - 1); 
+                    $('#prec').attr('onclick', 'precedent('+page+')');
                 }
                 if (response.next === null) { $('#suiv').hide(); }
                 else {
+                    $('#suiv').show();
                     //valeur prochaine page
-                    var page = response.next.charAt(response.next.length - 1); 
+                    page = response.next.charAt(response.next.length - 1); 
                     $('#suiv').attr('onclick', 'suivant('+page+')');
                 }
-                afficheHTML(filtre,response.results);
+                afficheHTML(filtre,response.results,p);
                 //$('#results').html(response);
             },
             error: function() {
@@ -104,10 +107,11 @@ function afficher()
     }
 }//fin afficher
 
-function afficheHTML(filtre,results)
+function afficheHTML(filtre,results,p)
 {
     //array results
-    let n = 1; 
+    console.log(p);
+    let n = 10*(p-1);
     switch (filtre) 
     {
         case 'planets':
@@ -118,7 +122,7 @@ function afficheHTML(filtre,results)
             //console.log(results[0].name);
             for(var i = 0 ; i<10 ; i++)
             {
-                n = i+1;
+                n++;
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].diameter+'</td><td>'+results[i].climate+'</td>'
                 +'<td>'+results[i].gravity+'</td>'
@@ -136,7 +140,7 @@ function afficheHTML(filtre,results)
                     +'</tr></thead><tbody>');   
             for(var i = 0 ; i<10 ; i++)
             {
-                n = i+1;
+                n++;
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].model+'</td><td>'+results[i].manufacturer+'</td>'
                 +'<td>'+results[i].length+'</td>'
@@ -154,7 +158,7 @@ function afficheHTML(filtre,results)
                     +'</tr></thead><tbody>');   
             for(var i = 0 ; i<10 ; i++)
             {
-                n = i+1;
+                n++;
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].model+'</td><td>'+results[i].manufacturer+'</td>'
                 +'<td>'+results[i].length+'</td>'
@@ -172,7 +176,7 @@ function afficheHTML(filtre,results)
                     +'</tr></thead><tbody>');   
             for(var i = 0 ; i<10 ; i++)
             {
-                n = i+1;
+                n++;
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].height+'</td><td>'+results[i].mass+'</td>'
                 +'<td>'+results[i].hair_color+'</td>'+'<td>'+results[i].skin_color+'</td>'
@@ -190,7 +194,7 @@ function afficheHTML(filtre,results)
                     +'</tr></thead><tbody>');   
             for(var i = 0 ; i<10 ; i++)
             {
-                n = i+1;
+                n++;
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].title+'</td>'+'<td>'+results[i].episode_id+'</td><td>'+results[i].opening_crawl+'</td>'
                 +'<td>'+results[i].director+'</td>'+'<td>'+results[i].producer+'</td>'+'<td>'+results[i].release_date+'</td>'
@@ -207,7 +211,7 @@ function afficheHTML(filtre,results)
                     +'</tr></thead><tbody>');   
             for(var i = 0 ; i<10 ; i++)
             {
-                n = i+1;
+                n++;
                 $('#taleaures').append('<tr><td>'+n+'</td>'
                 +'<td>'+results[i].name+'</td>'+'<td>'+results[i].classification+'</td><td>'+
                 results[i].classification+'</td>'
@@ -245,17 +249,19 @@ function suivant(p)
             console.log(response.previous);*/
             if (response.previous === null) { $('#prec').hide(); }
             else {
+                $('#prec').show();
                 //valeur prochaine page
                 var page = response.previous.charAt(response.previous.length - 1); 
                 $('#prec').attr('onclick', 'precedent('+page+')');
             }
             if (response.next === null) { $('#suiv').hide(); }
             else {
+                $('#suiv').show();
                 //valeur prochaine page
                 var page = response.next.charAt(response.next.length - 1); 
                 $('#suiv').attr('onclick', 'suivant('+page+')');
             }
-            afficheHTML(filtre,response.results);
+            afficheHTML(filtre,response.results,p);
             //$('#results').html(response);
         },
         error: function() {
@@ -287,17 +293,19 @@ function precedent(p)
             console.log(response.previous);*/
             if (response.previous === null) { $('#prec').hide(); }
             else {
+                $('#prec').show();
                 //valeur prochaine page
                 var page = response.previous.charAt(response.previous.length - 1); 
                 $('#prec').attr('onclick', 'precedent('+page+')');
             }
             if (response.next === null) { $('#suiv').hide(); }
             else {
+                $('#suiv').show();
                 //valeur prochaine page
                 var page = response.next.charAt(response.next.length - 1); 
                 $('#suiv').attr('onclick', 'suivant('+page+')');
             }
-            afficheHTML(filtre,response.results);
+            afficheHTML(filtre,response.results,p);
             //$('#results').html(response);
         },
         error: function() {
