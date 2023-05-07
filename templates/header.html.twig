@@ -9,12 +9,30 @@
 
       <nav id="navbar" class="nav-menu navbar">
         <ul>
-          <li><a href="#hero" class="nav-link scrollto {% if filtre == 'Planets' %}active{% endif %}"><i class="bi bi-globe-asia-australia"></i> <span>Planètes</span></a></li>
-          <li><a href="#about" class="nav-link scrollto {% if filtre == 'vaisseau' %}active{% endif %}"><i class="bi bi-airplane-engines-fill"></i> <span>Vaisseaux</span></a></li>
-          <li><a href="#resume" class="nav-link scrollto {% if filtre == 'vehicule' %}active{% endif %}"><i class="bi bi-truck-front-fill"></i> <span>Véhicules</span></a></li>
-          <li><a href="#portfolio" class="nav-link scrollto {% if filtre == 'personnage' %}active{% endif %}"><i class="bi bi-person-square"></i> <span>Personnages</span></a></li>
-          <li><a href="#services" class="nav-link scrollto {% if filtre == 'film' %}active{% endif %}"><i class="bi bi-film"></i> <span>Films</span></a></li>
-          <li><a href="#contact" class="nav-link scrollto {% if filtre == 'espece' %}active{% endif %}"><i class="bi bi-mouse3-fill"></i> <span>Espèces</span></a></li>
+            <li><a href="{% if filtre == 'planets'%}#{% else %}{{ path('app_accueil', {'parametre': 'planets'}) }}{% endif %}" 
+                class="nav-link scrollto {% if filtre == 'planets' %}active{% endif %}">
+                <i class="bi bi-globe-asia-australia"></i> <span>Planètes</span></a>
+            </li>
+            <li><a href="{% if filtre == 'starships'%}#{% else %}{{ path('app_accueil', {'parametre': 'starships'}) }}{% endif %}" 
+                class="nav-link scrollto {% if filtre == 'starships' %}active{% endif %}">
+                <i class="bi bi-airplane-engines-fill"></i> <span>Vaisseaux</span></a>
+            </li>
+            <li><a href="{% if filtre == 'vehicles'%}#{% else %}{{ path('app_accueil', {'parametre': 'vehicles'}) }}{% endif %}" 
+                class="nav-link scrollto {% if filtre == 'vehicles' %}active{% endif %}">
+                <i class="bi bi-truck-front-fill"></i> <span>Véhicules</span></a>
+            </li>
+            <li><a href="{% if filtre == 'people'%}#{% else %}{{ path('app_accueil', {'parametre': 'people'}) }}{% endif %}" 
+                class="nav-link scrollto {% if filtre == 'people' %}active{% endif %}">
+                <i class="bi bi-person-square"></i> <span>Personnages</span></a>
+            </li>
+            <li><a href="{% if filtre == 'films'%}#{% else %}{{ path('app_accueil', {'parametre': 'films'}) }}{% endif %}" 
+                class="nav-link scrollto {% if filtre == 'films' %}active{% endif %}"><i class="bi bi-film">
+                </i> <span>Films</span></a>
+            </li>
+            <li><a href="{% if filtre == 'species'%}#{% else %}{{ path('app_accueil', {'parametre': 'species'}) }}{% endif %}" 
+                class="nav-link scrollto {% if filtre == 'species' %}active{% endif %}">
+                <i class="bi bi-mouse3-fill"></i> <span>Espèces</span></a>
+            </li>
         </ul>
         <br/>
       </nav><!-- .nav-menu -->

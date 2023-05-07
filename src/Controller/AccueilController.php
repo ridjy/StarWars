@@ -15,9 +15,17 @@ class AccueilController extends AbstractController
     //private $client;
 
     #[Route('/', name: 'app_accueil')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $titre = 'Planètes'; $filtre = 'planets';
+        $filtre = $request->query->get('parametre') ?? 'planets';
+        $correspondances = ['Planètes' => 'planets',
+            'Vaisseaux' => 'starships',
+            'Véhicules' => 'vehicles',
+            'Personnages' => 'people',
+            'Films' => 'films',
+            'Espèces' => 'species',
+        ]; 
+        $titre = array_search($filtre,$correspondances);
         return $this->render('accueil/index.html.twig', [
             'filtre' => $filtre,
             'filtre_titre' => $titre,
