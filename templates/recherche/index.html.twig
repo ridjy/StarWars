@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bienvenue jeune Padawan!{% endblock %}
+{% block title %}Page de résultat!{% endblock %}
 
 {% block body %}
 <!-- ======= About Section ======= -->
@@ -11,7 +11,7 @@
             <div class="col-auto">
                 <form class="form-inline" method="POST" action="{{ path('app_recherche') }}">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="recherche" placeholder="Rechercher">
+                    <input type="text" class="form-control" name="recherche" placeholder="{{ recherche }}">
                     <input type="hidden" class="form-control" name="filtre" value="{{ filtre }}">
                     <button type="submit" class="btn btn-primary">Rechercher</button>
                 </div>
@@ -28,7 +28,7 @@
 
         <div class="row">
             <!--div tableau-->
-            <span id="spanall"><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour initialiser l'affichage des données</span>
+            <span id="spanall"><span class="bi bi-info-circle"></span> Veuiller cliquer sur le bouton "Afficher tout" pour réinitialiser l'affichage des données</span>
             <div class="col" id="tab" style="display:none;">
                 <table class="table table-bordered border-primary" id="taleaures">
                     
@@ -58,5 +58,32 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script>
+    $(document).ready(function() {
+        var response = '{{ result|raw }}';
+        var filtre = '{{ filtre }}';
+        response = JSON.parse(response);
+        var p = 1;
+        //$('#loadingDiv').show();
+        $('#tab').show();
+        // Afficher les résultats
+        $('#afficheres').html('Affichage de '+response.count+' résultat(s)');
+        if (response.previous === null) { $('#prec').hide(); }
+        else {
+            //valeur prochaine page
+            $('#prec').show();
+            page = response.previous.charAt(response.previous.length - 1); 
+            $('#prec').attr('onclick', 'precedent('+page+')');
+        }
+        if (response.next === null) { $('#suiv').hide(); }
+        else {
+            $('#suiv').show();
+            //valeur prochaine page
+            page = response.next.charAt(response.next.length - 1); 
+            $('#suiv').attr('onclick', 'suivant('+page+')');
+        }
+        afficheHTML(filtre,response.results,p);
+    });
+</script>
 <script src="{{asset('js/affichage.js')}}"></script>
 {% endblock %}
